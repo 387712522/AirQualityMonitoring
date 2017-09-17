@@ -1,0 +1,9 @@
+G:\softwareProject\C#Proj\AriQualityMonitoring\AriQualityMonitoring\AriQualityMonitoring\bin\Debug\AriQualityMonitoring.exe
+G:\softwareProject\C#Proj\AriQualityMonitoring\AriQualityMonitoring\AriQualityMonitoring\bin\Debug\AriQualityMonitoring.pdb
+G:\softwareProject\C#Proj\AriQualityMonitoring\AriQualityMonitoring\AriQualityMonitoring\obj\x86\Debug\AriQualityMonitoring.csprojResolveAssemblyReference.cache
+G:\softwareProject\C#Proj\AriQualityMonitoring\AriQualityMonitoring\AriQualityMonitoring\obj\x86\Debug\AriQualityMonitoring.ChartForm.resources
+G:\softwareProject\C#Proj\AriQualityMonitoring\AriQualityMonitoring\AriQualityMonitoring\obj\x86\Debug\AriQualityMonitoring.AriQualityMonitoringForm.resources
+G:\softwareProject\C#Proj\AriQualityMonitoring\AriQualityMonitoring\AriQualityMonitoring\obj\x86\Debug\AriQualityMonitoring.Properties.Resources.resources
+G:\softwareProject\C#Proj\AriQualityMonitoring\AriQualityMonitoring\AriQualityMonitoring\obj\x86\Debug\AriQualityMonitoring.csproj.GenerateResource.Cache
+G:\softwareProject\C#Proj\AriQualityMonitoring\AriQualityMonitoring\AriQualityMonitoring\obj\x86\Debug\AriQualityMonitoring.exe
+G:\softwareProject\C#Proj\AriQualityMonitoring\AriQualityMonitoring\AriQualityMonitoring\obj\x86\Debug\AriQualityMonitoring.pdb
