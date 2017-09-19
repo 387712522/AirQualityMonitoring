@@ -16,6 +16,7 @@ namespace AriQualityMonitoring
 
         delegate void DelegateAppendText(string text);
         delegate void DelegateTextClear();
+        delegate void DelegateAirQualityPoint(int x, float y);
 
         private int PM1_0Val = 0;
         private int PM2_5Val = 0;
@@ -26,39 +27,21 @@ namespace AriQualityMonitoring
         private double FormaldehydeVal = 0;
         private double TemperatureVal = 0;
         private double HumidityVal = 0;
+
+        public ChartForm ChartWinForm = null;
+        public int AirQualityPointAxisX = 0;
+
+       
+
         public AriQualityMonitoringForm()
         {
+            
             InitializeComponent();
+            ChartWinForm = new ChartForm();
+            ChartWinForm.FormClosed += ChartWinFormClosed;
+
+
         }
-        //public class AirQualityValueEventArgs : EventArgs
-        //{
-
-        //    public AirQualityValueEventArgs(string CHumidityValueArgs)
-        //    {
-        //        this.HumidityValueArgs = CHumidityValueArgs;
-        //    }
-        //    public string HumidityValueArgs { get; private set; }
-        //}
-        //public class AirQualityValueInfo
-        //{
-        //    public event EventHandler<AirQualityValueEventArgs> NewHumidityValueArgsInfo;
-
-        //    public void AirQualityValueUpdata(string CHumidityValueArgs)
-        //    {
-        //        RaiseAirQualityValueInfo(CHumidityValueArgs);
-        //    }
-
-        //    protected virtual void RaiseAirQualityValueInfo(string CHumidityValueArgs)
-        //    {
-        //        EventHandler<AirQualityValueEventArgs> AirQualityValueInfo = NewHumidityValueArgsInfo;
-        //        if (AirQualityValueInfo != null)
-        //        {
-        //            AirQualityValueInfo(this, new AirQualityValueEventArgs(CHumidityValueArgs));
-        //        }
-        //    }
-
-        //}
-
 
         public double PM2_5Value()
         {
@@ -130,6 +113,8 @@ namespace AriQualityMonitoring
                 DelegateAppendText HumidityValAppendText = new DelegateAppendText(HumidityValTextBox.AppendText); //湿度 窗口显示的方法
                 DelegateTextClear HumidityValClearText = new DelegateTextClear(HumidityValTextBox.Clear);
                 //Comm.BytesToRead中为要读入的字节长度
+
+                DelegateAirQualityPoint AirQualityPointObj = new DelegateAirQualityPoint(ChartWinForm.AirQualityPoint);
 
                 int len = serialPort1.BytesToRead;
                 byte[] readBuffer = new byte[len];
@@ -216,6 +201,27 @@ namespace AriQualityMonitoring
 
                             //执行解析代码
                             SerialDataList.RemoveRange(0, SerialDatalen + 4);
+
+                            if (ChartWinForm != null)
+                            {
+                                if (AirQualityPointAxisX < 100)
+                                {
+                                    if (ChartWinForm.IsHandleCreated)
+                                    {
+                                        //ChartWinForm.AirQualityPoint(AirQualityPointAxisX, (float)HumidityVal);
+                                        ChartWinForm.Invoke(AirQualityPointObj, AirQualityPointAxisX, (float)HumidityVal);
+                                        AirQualityPointAxisX++;
+
+
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                MessageBox.Show("ChartWinForm == null");
+                            }
+                            
+
                         }
 
 
@@ -285,8 +291,45 @@ namespace AriQualityMonitoring
 
         private void ShowChartButton_Click(object sender, EventArgs e)
         {
-            ChartForm ChartWinForm = new ChartForm();
+
+
+            //try
+            //{
+            //if (ChartWinForm != null)
+            //{
+            //    if (ShowChartButton.Enabled)
+            //    {
+            //        ChartWinForm.Show();
+            //        ShowChartButton.Enabled = false;
+            //    }
+            //}
+            //else
+            //{
+            AirQualityPointAxisX = 0;
+            ChartWinForm = new ChartForm();
+            ChartWinForm.FormClosed += ChartWinFormClosed;
             ChartWinForm.Show();
+            ShowChartButton.Enabled = false;
+            //}
+
+            //}
+            //catch (Exception exc)
+            //{
+            //    MessageBox.Show("提示信息 ,具体原因：" + exc.Message);
+            //}
+
         }
+        private void ChartWinFormClosed(object sender, FormClosedEventArgs e)
+        {
+            if (ShowChartButton.Enabled == false)
+            {
+                ChartWinForm.Hide();
+                ChartWinForm.Dispose();
+                ShowChartButton.Enabled = Enabled;
+                //Application.Exit();
+            }
+        }
+        
+       
     }
 }
